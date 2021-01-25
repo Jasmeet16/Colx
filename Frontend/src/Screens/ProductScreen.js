@@ -12,7 +12,9 @@ import Loader from '../Components/Loader';
 //actions
 import { listProductDetails } from '../actions/productActions'
 
-const ProductScreen = ({match}) => {
+
+
+const ProductScreen = ({ history , match}) => {
 
    const dispatch  = useDispatch();
 
@@ -21,9 +23,20 @@ const ProductScreen = ({match}) => {
     },[dispatch , match]);
 
 
+
+
     const prodDetail = useSelector( (state) => state.productDetails );
 
     const {loading, error , product } = prodDetail;
+
+
+    //Handlers
+
+    const addToCartHandler = () =>{
+
+        console.log('cart button clicked')
+        history.push(`/cart/${match.params.id}`);
+    }
 
     return (
         <>
@@ -55,16 +68,14 @@ const ProductScreen = ({match}) => {
                         <Row>
                             <Col>Status</Col>
                             <Col>
-                                {product.countInStock > 0 ? "Available" : "Out Of Stock"}
+                                { product.inStock ? "Available" : "Out Of Stock"}
                             </Col>     
                         </Row>
                     </ListGroup.Item>
                     <ListGroup>
-                        <Button variant="dark" block> Add To Cart </Button>
+                        <Button variant="dark" disabled={ !product.inStock} onClick={addToCartHandler} > {product.inStock ? "Add To Cart" : "Out Of Stock"} </Button>
                     </ListGroup>
                 </Col>
-                
-            
             </Row>
             }    
         </>
