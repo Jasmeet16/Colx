@@ -41,7 +41,7 @@ const CartScreen = ({match}) => {
             <Col md={8}>
                 <h2>Wishlisted Items</h2>
                 {
-                    cartItems.length === 0 ? (<Message variant='danger' >There are no items in your wishlist <Alert.Link href="/">go back</Alert.Link> </Message>) :
+                    cartItems.length === 0 ? (<Message variant='danger' >There are no items in your wishlist <Link to="/" className='text-dark'>go back</Link> </Message>) :
                     
                         <ListGroup variant="flush" >
                             {
