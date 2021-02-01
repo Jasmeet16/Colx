@@ -16,7 +16,7 @@ const authUser = asyncHandler( async ( req , res )=>{
 
    // console.log(user)
     if( user && (await user.matchPassword( password )) ){
-        res.send({
+        res.json({
             _id:user._id,
             email:user.email,
             name:user.name,
@@ -65,6 +65,37 @@ const registerUser = async (req, res)=>{
 
 }
 
+//edit user 
+// route  /api/user/profile
+
+const updateUser = async (req, res)=>{
+    const user= await User.findById(req.user._id);
+    //console.log(user)
+    if( user ){
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.college = req.body.college || user.college;
+        user.city = req.body.city || user.city;
+        user.phone = req.body.phone || user.phone;
+        if( req.body.password ){
+            user.password = req.body.password
+        }
+
+        const updatedUser = await user.save();
+
+        res.json({
+            _id:updatedUser._id,
+            email:updatedUser.email,
+            name:updatedUser.name,
+            token:generateToken(updatedUser._id),
+        })
+        
+    }else{
+        res.status(401);
+        throw new Error ( "wrong email or password" ) ;
+    }
+}
+
 
 
 
@@ -80,6 +111,9 @@ const getUserById = asyncHandler( async(req,res)=>{
             _id:user._id,
             email:user.email,
             name:user.name,
+            college:user.college,
+            city:user.city,
+            phone:user.phone
         })
     }else{
         res.status(401);
@@ -91,4 +125,6 @@ const getUserById = asyncHandler( async(req,res)=>{
 module.exports.authUser = authUser;
 module.exports.getUserById = getUserById;
 module.exports.registerUser = registerUser;
+module.exports.updateUser = updateUser;
+
 
