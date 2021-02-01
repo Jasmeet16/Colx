@@ -49,16 +49,16 @@ const CartScreen = ({match}) => {
                                     return (
                                         <ListGroup.Item key={p.data}>
                                         <Row>
-                                            <Col md={3}>
+                                            <Col md={3} xs={5}>
                                                 <Image src={p.image} alt={p.name} className="rounded" fluid ></Image>
                                             </Col>
-                                            <Col md={4} className="mt-3">
+                                            <Col md={4} xs={3} className="mt-3">
                                                 <Link to={`/products/${p.data}`}  className="texr-dark"> {p.name} </Link>
                                             </Col>
-                                            <Col md={2} className="mt-4">
+                                            <Col md={2} xs={2} className="mt-4">
                                                 {p.price}
                                             </Col>
-                                            <Col md={1}>
+                                            <Col md={1} xs={2}>
                                                 <Button variant='light' onClick={ () => onDeleteHandler(p.data) } className="mt-3" > <i className='fas fa-trash'></i> </Button>
                                             </Col>
                                         </Row>
@@ -67,7 +67,6 @@ const CartScreen = ({match}) => {
                                 })
                             }
                         </ListGroup>
-                    
                 }
             </Col>
             <Col md={4}>

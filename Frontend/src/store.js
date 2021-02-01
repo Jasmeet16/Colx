@@ -5,11 +5,11 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 //reducers
 import {productListReducer , productDetailReducer} from './reducers/productReducer'
 import { cartItemReducer } from './reducers/cartReducer'
-import { userLoginReducer } from './reducers/userReducers'
+import { userLoginReducer , userRegisterReducer } from './reducers/userReducers'
  
 
 
-const reducer = combineReducers({ productList : productListReducer,  productDetails : productDetailReducer , cartItem : cartItemReducer , userLogin : userLoginReducer});
+const reducer = combineReducers({ productList : productListReducer,  productDetails : productDetailReducer , cartItem : cartItemReducer , userLogin : userLoginReducer , userRegister :userRegisterReducer});
 
 const cartItemsJson = JSON.parse(localStorage.getItem('cartItems'));
 

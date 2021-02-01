@@ -4,3 +4,17 @@ main{
 h2{
     padding: 1rem;
 }
+
+.nav-item .dropdown-item:hover {
+  background: #413f3e;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
