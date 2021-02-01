@@ -1,11 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Col, Button } from "react-bootstrap";
 import Message from "../Components/Message";
-import Loader from "../Components/Loader";
 import FormContainer from "../Components/FormContainer";
-import { getUserDetails } from "../actions/userActions";
+import { getUserDetails , updateUserDetails } from "../actions/userActions";
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState("");
@@ -25,6 +24,9 @@ const ProfileScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const { success } = userUpdate;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -42,10 +44,16 @@ const ProfileScreen = ({ history }) => {
     }
   }, [dispatch, history, userInfo, user]);
 
+  const submitHandler = (e)=>{
+    e.preventDefault();
+    dispatch( updateUserDetails( {id:user._id , name , email , password , college , city , phone} ) )
+  }
+
   return (
     <FormContainer>
       <h3 className="my-3 text-center">User Profile</h3>
-      {/* {error && <Message variant="danger"> Invalid email or password </Message>} */}
+      {success && <Message variant="success"> Profile Updated Successfully </Message>}
+      <Form onSubmit={submitHandler}>
       <Form.Row>
         <Form.Group as={Col} controlId="email">
           <Form.Label>Email</Form.Label>
@@ -110,6 +118,7 @@ const ProfileScreen = ({ history }) => {
       <Button variant="dark" type="submit" block>
         Submit
       </Button>
+      </Form>
     </FormContainer>
   );
 };
