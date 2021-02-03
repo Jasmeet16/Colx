@@ -1,4 +1,4 @@
-const expressAsyncHandler = require('express-async-handler');
+
 const asyncHandler = require('express-async-handler');
 //const matchPassword = require('../models/userModel');
 const {User} = require('../models/userModel');
@@ -32,7 +32,7 @@ const authUser = asyncHandler( async ( req , res )=>{
 // desc : register a new user
 //route POST : api/user 
 
-const registerUser = async (req, res)=>{
+const registerUser = asyncHandler( async (req, res)=>{
     const { name , email, password , phone , college , city} = req.body;
 
     const exist = await User.findOne({email});
@@ -63,7 +63,7 @@ const registerUser = async (req, res)=>{
         throw new Error('cannot create user');
     }
 
-}
+})
 
 //edit user 
 // route  /api/user/profile
@@ -104,7 +104,7 @@ const updateUser = async (req, res)=>{
 //route GET : api/user/profile
 
 const getUserById = asyncHandler( async(req,res)=>{
-    const user= await User.findById(req.user._id);
+    const user = await User.findById(req.user._id);
     //console.log(user)
     if( user ){
         res.send({
@@ -113,7 +113,8 @@ const getUserById = asyncHandler( async(req,res)=>{
             name:user.name,
             college:user.college,
             city:user.city,
-            phone:user.phone
+            phone: user.phone,
+            products:user.products,
         })
     }else{
         res.status(401);

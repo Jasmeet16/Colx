@@ -17,13 +17,13 @@ const userAuthMiddleware = asyncHandler( async(req, res, next)=>{
 
         } catch (error) {
             res.status(401);
-            throw new error('not authorized');
+            res.send('not authorized');
         }
     }
     token = req.headers.authorization.split(' ')[1];
     if(!token ){
         res.status(401);
-        throw new error('not authorized');
+        res.send('not authorized');
     }
     
 })
