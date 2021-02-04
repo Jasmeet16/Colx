@@ -103,7 +103,8 @@ const updateUser = async (req, res)=>{
 // description  user id fetched from middleware(token)
 //route GET : api/user/profile
 
-const getUserById = asyncHandler( async(req,res)=>{
+const getUserById = asyncHandler(async (req, res) => {
+    
     const user = await User.findById(req.user._id);
     //console.log(user)
     if( user ){

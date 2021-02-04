@@ -13,6 +13,25 @@ const getProducts = async (req, res) => {
   }
 };
 
+
+//get products of logged in user
+// to api/products
+const getProductsOfUser = async (req, res) => {
+
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(401).json("User needd to be logged in");
+  }
+  try {
+    const products = await Product.find({user:user._id});
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
 //getsingleproduct
 //to api/products/:id
 const getSingleProduct = async (req, res) => {
@@ -49,7 +68,7 @@ const createProduct = asyncHandler( async (req, res) => {
       }
      res.json(newProd);
   } catch (error) {
-    console.error(error);
+    throw new Error(error);
   }
 });
 
@@ -71,12 +90,14 @@ const deleteProduct = async ( req , res) => {
       res.status(202).json("Product deleted successfully");
     }
   } catch (error) {
-    console.error(error);
+   throw new Error(error);
   }
 
 }
 
 module.exports.getProducts = getProducts;
+module.exports.getProductsOfUser = getProductsOfUser;
+
 module.exports.getSingleProduct = getSingleProduct;
 module.exports.createProduct = createProduct;
 module.exports.deleteProduct = deleteProduct

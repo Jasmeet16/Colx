@@ -9,7 +9,7 @@ const userAuthMiddleware = asyncHandler( async(req, res, next)=>{
         token = req.headers.authorization.split(' ')[1];
         try {
             const retrievedUser = await jwt.verify(token , process.env.JSON_SECRET);
-             console.log(retrievedUser)
+            // console.log(retrievedUser)
 
             const user =  await User.findById(retrievedUser.id).select('-password');
             req.user = user;

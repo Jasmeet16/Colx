@@ -9,7 +9,7 @@ dotenv.config();
 
 connectDb();
 
-console.log( typeof( connectDb ) );
+//console.log( typeof( connectDb ) );
 
 const app = express();
 
