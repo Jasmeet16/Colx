@@ -11,6 +11,7 @@ import {
   PRODUCT_BYUSER_REQUEST,
   PRODUCT_BYUSER_SUCCESS,
   PRODUCT_BYUSER_FAIL,
+  PRODUCT_DELETE_REQUEST,
 } from "../constants/productConstants";
 import axios from "axios";
 
@@ -46,7 +47,7 @@ export const listProductDetails = (id) => async (dispatch) => {
   }
 };
 
-export const listProductByUser = (id) => async (dispatch, getState) => {
+export const listProductByUser = () => async (dispatch, getState) => {
   try {
 
     dispatch({ type: PRODUCT_BYUSER_REQUEST });
@@ -62,27 +63,18 @@ export const listProductByUser = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data:{products} } = await axios.get(`/api/user/${id}`, config );
+    const { data } = await axios.get(`/api/user/profile/products`, config );
    
-    let arr = [];
-
-    
-    Promise.all(products.map(async (pid) => {
-      axios.get(`/api/products/${pid}`).then((res) => {
-        arr.push(res.data);
-      })
-      
-    })).then(
-      dispatch({
-        type: PRODUCT_BYUSER_SUCCESS,
-        payload: arr,
-      })
-    );
+   
 
     //console.log(id);
     //const {data} = await axios.get(`/api/products/${id}`)
 
-    
+    dispatch({
+      type: PRODUCT_BYUSER_SUCCESS,
+      payload: data,
+    })
+
   } catch (error) {
     dispatch({ type: PRODUCT_BYUSER_FAIL, payload: error.message });
   }
@@ -105,6 +97,40 @@ export const addProduct = (product) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(`/api/products`, product, config);
+
+    dispatch({
+      type: PRODUCT_ADD_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: PRODUCT_ADD_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const deleteProduct = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PRODUCT_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`/api/products/${id}`, config);
 
     dispatch({
       type: PRODUCT_ADD_SUCCESS,

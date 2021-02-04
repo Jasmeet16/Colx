@@ -7,7 +7,7 @@ import Message from "../Components/Message";
 import FormContainer from "../Components/FormContainer";
 
 import { getUserDetails, updateUserDetails } from "../actions/userActions";
-import { listProductByUser } from "../actions/productActions";
+import { listProductByUser , deleteProduct } from "../actions/productActions";
 
 
 const ProfileScreen = ({ history }) => {
@@ -37,12 +37,13 @@ const ProfileScreen = ({ history }) => {
   const { products } = productByUser;
 
   useEffect( () => {
+    
     if (!userInfo) {
       history.push("/login");
     } else {
       if (!user || !user.name) {
         dispatch(getUserDetails("profile"));
-        dispatch(listProductByUser("profile"))
+        //
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -50,10 +51,20 @@ const ProfileScreen = ({ history }) => {
         setCity(user.city);
         setPassword(user.password);
         setPhone(user.phone);
-        setProduct(products)
+        
       }
+        dispatch(listProductByUser())
+        //setProduct( products )
+      
     }
-  }, [dispatch, history, userInfo, user , productByUser]);
+  }, [dispatch, history, userInfo, user ]);
+
+
+
+  const onDeleteHandler = (id) => {
+    dispatch(deleteProduct(id));
+    dispatch(listProductByUser());
+  }
 
 
   const submitHandler = (e) => {
@@ -145,11 +156,11 @@ const ProfileScreen = ({ history }) => {
           </Button>
         </Form>
       </FormContainer>
-          <div>  <h3 className="my-3 text-center">User Profile</h3>
+          <div>  <h3 className="my-3 text-center">Products Advertised</h3>
       <Row>
         <Col md={12}>
           <ListGroup variant="flush">
-            {product.map((p) => {
+            {products.map((p) => {
               return (
                 <ListGroup.Item key={p.data}>
                   <Row>
@@ -162,7 +173,7 @@ const ProfileScreen = ({ history }) => {
                       ></Image>
                     </Col> */}
                     <Col md={4} xs={3} className="mt-3">
-                      <Link to={`/products/${p.data}`} className="texr-dark">
+                      <Link to={`/products/${p._id}`} className="text-dark">
                         {" "}
                         {p.name}{" "}
                       </Link>
@@ -170,16 +181,19 @@ const ProfileScreen = ({ history }) => {
                     <Col md={2} xs={2} className="mt-4">
                       {p.price}
                     </Col>
-                    {/* <Col md={1} xs={2}>
+                    <Col md={1} xs={2}>
                       <Button
                         variant="light"
-                        onClick={() => onDeleteHandler(p.data)}
+                        onClick={() => {
+                          console.log(p._id)
+                          onDeleteHandler(p._id)
+                        }}
                         className="mt-3"
                       >
                         {" "}
                         <i className="fas fa-trash"></i>{" "}
                       </Button>
-                    </Col> */}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
               );
