@@ -12,7 +12,7 @@ const ProductAddScreen = ({ match, history }) => {
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
-
+  const [image, setImage] = useState('')
 
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
@@ -33,12 +33,33 @@ const ProductAddScreen = ({ match, history }) => {
       addProduct({
         name,
         price,
+        image,
         brand,
         category,
         description,
       })
     )
   };
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const form = new FormData();
+    form.append('image', file);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      } 
+
+      const { data } = await axios.post('/api/upload', form, config);
+      setImage(data);
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <>
@@ -64,7 +85,7 @@ const ProductAddScreen = ({ match, history }) => {
               onChange={(e) => setPrice(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          {/* 
+          
             <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label>
               <Form.Control
@@ -80,7 +101,7 @@ const ProductAddScreen = ({ match, history }) => {
                 onChange={uploadFileHandler}
               ></Form.File>
              
-            </Form.Group> */}
+            </Form.Group>
 
           <Form.Group controlId="brand">
             <Form.Label>Brand</Form.Label>

@@ -81,6 +81,7 @@ export const listProductByUser = () => async (dispatch, getState) => {
 };
 
 export const addProduct = (product) => async (dispatch, getState) => {
+  
   try {
     dispatch({
       type: PRODUCT_ADD_REQUEST,

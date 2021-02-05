@@ -46,13 +46,13 @@ const getSingleProduct = async (req, res) => {
 //post a product
 //to api/products
 const createProduct = asyncHandler( async (req, res) => {
-  const { name, description, brand, category, price } = req.body;
+  const { name, description,image,  brand, category, price } = req.body;
 
   try {
     const user = await User.findById(req.user._id).select('-password');
       const newProd = await Product.create({
           name,
-          image: 'default-image',
+          image,
           description,
           brand,
           category,
