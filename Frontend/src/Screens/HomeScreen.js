@@ -15,6 +15,9 @@ const HomeScreen = () => {
     dispatch(listProducts());
   }, [dispatch]);
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
@@ -40,8 +43,12 @@ const HomeScreen = () => {
       <OverlayTrigger
         overlay={<Tooltip id="button-tooltip-2"> Post your AD </Tooltip>}
       >
-        <LinkContainer to="/addproduct">
-          <Button className="add-button rounded-pill" size="lg" variant="outline-dark">
+        <LinkContainer to={userInfo ? "/addproduct" : "/login"}>
+          <Button
+            className="add-button rounded-pill"
+            size="lg"
+            variant="outline-dark"
+          >
             <i className="fas fa-plus"></i> Sell
           </Button>
         </LinkContainer>

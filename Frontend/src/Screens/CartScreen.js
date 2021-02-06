@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Link} from 'react-router-dom';
 import { useDispatch , useSelector } from 'react-redux';
 
-import { Row , Col , Image , Alert, ListGroup ,Button } from 'react-bootstrap';
+import { Row , Col , Image , ListGroup ,Button } from 'react-bootstrap';
 
 //Componenets
 
@@ -53,7 +53,7 @@ const CartScreen = ({match}) => {
                                                 <Image src={p.image} alt={p.name} className="rounded" fluid ></Image>
                                             </Col>
                                             <Col md={4} xs={3} className="mt-3">
-                                                <Link to={`/products/${p.data}`}  className="texr-dark"> {p.name} </Link>
+                                                <Link to={`/products/${p.data}`}  className="text-dark"> {p.name} </Link>
                                             </Col>
                                             <Col md={2} xs={2} className="mt-4">
                                                 {p.price}

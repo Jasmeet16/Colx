@@ -1,11 +1,11 @@
 import React from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Container, Nav, Navbar , NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 //
 
 import { useDispatch, useSelector } from "react-redux";
-import {logout} from '../actions/userActions'
+import { logout } from "../actions/userActions";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -13,10 +13,10 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const logoutHandler = ()=>{
-      dispatch( logout() );
-      console.log("logout")
-  }
+  const logoutHandler = () => {
+    dispatch(logout());
+    console.log("logout");
+  };
 
   return (
     <header>
@@ -34,18 +34,27 @@ const Header = () => {
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id="collasible-nav-dropdown" >
-                  <LinkContainer to='/profile'>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler} >
-                    Logout
-                  </NavDropdown.Item>
+                <NavDropdown
+                  title={userInfo.name}
+                  id="collasible-nav-dropdown"
+                  className='super-colors'
+                > 
+                    <LinkContainer to="/profile" variant="success">
+                      <NavDropdown.Item >Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/myads">
+                      <NavDropdown.Item>My ADs</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={logoutHandler}>
+                      Logout
+                    </NavDropdown.Item>
+                 
                 </NavDropdown>
               ) : (
-                <LinkContainer to='/login'>
+                <LinkContainer to="/login">
                   <Nav.Link>
-                    <i className='fas fa-user'></i> Sign In
+                    <i className="fas fa-user"></i> Sign In
                   </Nav.Link>
                 </LinkContainer>
               )}

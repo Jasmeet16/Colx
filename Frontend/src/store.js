@@ -10,6 +10,7 @@ import {
   productByUserReducer,
   productDeleteReducer
 } from "./reducers/productReducer";
+
 import { cartItemReducer } from "./reducers/cartReducer";
 import {
   userLoginReducer,
@@ -29,7 +30,6 @@ const reducer = combineReducers({
   productAdd: productAddReducer,
   productByUser: productByUserReducer,
   productDelete:productDeleteReducer
-
 });
 
 const cartItemsJson = JSON.parse(localStorage.getItem("cartItems"));

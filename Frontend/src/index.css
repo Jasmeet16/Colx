@@ -22,6 +22,15 @@ input[type=number] {
 .add-button{
  
   position: fixed;
-    bottom: 30px;
-    right: 30px; 
+    bottom: 40px;
+    right: 40px; 
 }
+
+.heart:hover{
+ cursor: pointer;
+ color: rgb(202, 21, 21);
+}
+
+.card-img-top {
+  object-fit: contain;
+  }

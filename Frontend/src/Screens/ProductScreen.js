@@ -14,20 +14,17 @@ import axios from "axios";
 
 //components
 import { useDispatch, useSelector } from "react-redux";
-import Rating from "../Components/Rating";
 import Message from "../Components/Message";
 import Loader from "../Components/Loader";
 
 //actions
 import { listProductDetails } from "../actions/productActions";
-import { getUserDetails } from "../actions/userActions";
 
 const ProductScreen = ({ history, match }) => {
   const [name, setName] = useState("");
   const [college, setCollege] = useState("");
 
   const [phone, setPhone] = useState("");
-  const [city, setCity] = useState("");
 
   const [email, setEmail] = useState("");
 
@@ -36,6 +33,22 @@ const ProductScreen = ({ history, match }) => {
   const prodDetail = useSelector((state) => state.productDetails);
 
   const { loading, error, product } = prodDetail;
+
+  const monthNames = [
+    "",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -47,7 +60,6 @@ const ProductScreen = ({ history, match }) => {
   //Handlers
 
   const addToCartHandler = () => {
-    //console.log("cart button clicked");
     history.push(`/cart/${match.params.id}`);
   };
 
@@ -80,13 +92,26 @@ const ProductScreen = ({ history, match }) => {
             <ListGroup.Item className="mt-2">
               <Row>
                 <Col>Cost</Col>
-                <Col>₹ {product.price}</Col>
+                <Col className="text-center">₹ {product.price}</Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
                 <Col>Status</Col>
-                <Col>{product.inStock ? "Available" : "Out Of Stock"}</Col>
+                <Col className="text-center">
+                  {product.inStock ? "Available" : "Sold"}
+                </Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <Col>Add to Wishlist</Col>
+                <Col className="text-center">
+                  <i
+                    className="heart fas fa-heart fa-2x"
+                    onClick={addToCartHandler}
+                  ></i>
+                </Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
@@ -105,18 +130,21 @@ const ProductScreen = ({ history, match }) => {
 
                   <Accordion.Collapse eventKey="1">
                     {!userInfo ? (
-                     <Row className='mt-3'>
-                     <Col>
-                       <Row>
-                         <strong className="mx-auto"> Login first to see the details </strong>
-                       </Row>
-                       <Button variant="link" block>
-                       <Link to= '/login'>
-                       <p className="mx-auto text-dark"> Login Here </p>
-                         </Link>
-                       </Button>
-                     </Col>
-                   </Row>
+                      <Row className="mt-3">
+                        <Col>
+                          <Row>
+                            <strong className="mx-auto">
+                              {" "}
+                              Login first to see the details{" "}
+                            </strong>
+                          </Row>
+                          <Button variant="link" block>
+                            <Link to="/login">
+                              <p className="mx-auto text-dark"> Login Here </p>
+                            </Link>
+                          </Button>
+                        </Col>
+                      </Row>
                     ) : (
                       <Card.Body>
                         <ListGroup variant="flush">
@@ -139,7 +167,9 @@ const ProductScreen = ({ history, match }) => {
                           <br></br>
                           <ListGroup.Item>
                             <Row>
-                              <Col>Email</Col>
+                              <Col>
+                                <i className="far fa-paper-plane"></i>
+                              </Col>
                               <Col>
                                 <a
                                   href={`mailto:${email}`}
@@ -152,7 +182,9 @@ const ProductScreen = ({ history, match }) => {
                           </ListGroup.Item>
                           <ListGroup.Item>
                             <Row>
-                              <Col>Phone</Col>
+                              <Col>
+                                <i className="fas fa-phone-alt"></i>
+                              </Col>
                               <Col>{phone}</Col>
                             </Row>
                           </ListGroup.Item>
@@ -177,6 +209,23 @@ const ProductScreen = ({ history, match }) => {
             <ListGroup.Item>
               {" "}
               <p> {product.description} </p>{" "}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <Col> Posted On: </Col>
+                <Col>
+                  <p>
+                    {String(String(product.createdAt).split("-")[2]).substring(0,2)}
+                    {" "}
+                    {
+                      monthNames[
+                        Number(String(product.updatedAt).split("-")[1])
+                      ]
+                    }{" "}
+                    {String(product.updatedAt).split("-")[0]}
+                  </p>{" "}
+                </Col>
+              </Row>
             </ListGroup.Item>
           </ListGroup>
         </Col>

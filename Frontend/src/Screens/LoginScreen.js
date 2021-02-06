@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import Message from "../Components/Message";
 import Loader from "../Components/Loader";
-import FormContainer from "../Components/FormContainer";
 import { login } from "../actions/userActions";
 
 const LoginScreen = ({history, location}) => {
@@ -33,7 +32,8 @@ const LoginScreen = ({history, location}) => {
   };
     
   return (
-    <FormContainer>
+    <Row className="justify-content-md-center">
+      <Col md={6}>
       <h3 className='my-3 text-center'>SIGN IN</h3>
       { error && <Message variant='danger'> Invalid email or password </Message> }
       { loading ? <Loader></Loader> :  
@@ -45,7 +45,7 @@ const LoginScreen = ({history, location}) => {
             type="email"
             placeholder="Enter email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+           onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-7" controlId="formGroupPassword">
@@ -75,7 +75,8 @@ const LoginScreen = ({history, location}) => {
           </Button>
         </Col>
       </Row>
-    </FormContainer>
+      </Col>
+    </Row>
   );
 };
 
