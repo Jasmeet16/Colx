@@ -7,7 +7,7 @@ const connectDb = async () =>{
         );
         console.log( `db server running on ${conn.connection.host}` );
     }catch(error){
-        console.log(`Error in conneting to mongo db ${errror.message}`)
+        console.log(`Error in conneting to mongo db ${error.message}`)
     }
 }
 

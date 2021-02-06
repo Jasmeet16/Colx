@@ -1,7 +1,9 @@
 
 const asyncHandler = require('express-async-handler');
 //const matchPassword = require('../models/userModel');
-const {User} = require('../models/userModel');
+const { User } = require('../models/userModel');
+const {Product} = require('../models/productModel');
+
 const {generateToken} = require('../utils/generateTokens');
 
 
@@ -107,6 +109,7 @@ const getUserById = asyncHandler(async (req, res) => {
     
     const user = await User.findById(req.user._id);
     //console.log(user)
+
     if( user ){
         res.send({
             _id:user._id,
@@ -124,8 +127,34 @@ const getUserById = asyncHandler(async (req, res) => {
 
 })
 
+// description  user id fetched from middleware(token)
+//route GET : api/user/id
+const getUserByPassedId = asyncHandler(async (req, res) => {
+    //console.log(req.params.id)
+    const user = await User.findById(req.params.id);
+    //console.log(user)
+
+    if( user ){
+        res.send({
+            email:user.email,
+            name:user.name,
+            college:user.college,
+            city:user.city,
+            phone: user.phone,
+        })
+    }else{
+        res.status(401);
+        throw new Error ( "wrong email or password" ) ;
+    }
+
+})
+
+
+
 module.exports.authUser = authUser;
 module.exports.getUserById = getUserById;
+module.exports.getUserByPassedId = getUserByPassedId;
+
 module.exports.registerUser = registerUser;
 module.exports.updateUser = updateUser;
 

@@ -1,14 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Row, Col, Button, ListGroup , Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Form, Row, Col, Button, InputGroup } from "react-bootstrap";
+
 import Message from "../Components/Message";
 import FormContainer from "../Components/FormContainer";
 
 import { getUserDetails, updateUserDetails } from "../actions/userActions";
-import { listProductByUser , deleteProduct } from "../actions/productActions";
-
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState("");
@@ -19,8 +17,6 @@ const ProfileScreen = ({ history }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  let [product, setProduct] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -33,11 +29,7 @@ const ProfileScreen = ({ history }) => {
   const userUpdate = useSelector((state) => state.userUpdate);
   const { success } = userUpdate;
 
-  const productByUser = useSelector((state) => state.productByUser);
-  const { products } = productByUser;
-
-  useEffect( () => {
-    
+  useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
@@ -51,21 +43,9 @@ const ProfileScreen = ({ history }) => {
         setCity(user.city);
         setPassword(user.password);
         setPhone(user.phone);
-        
       }
-        dispatch(listProductByUser())
-        //setProduct( products )
-      
     }
-  }, [dispatch, history, userInfo, user ]);
-
-
-
-  const onDeleteHandler = (id) => {
-    dispatch(deleteProduct(id));
-    dispatch(listProductByUser());
-  }
-
+  }, [dispatch, history, userInfo, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -83,127 +63,109 @@ const ProfileScreen = ({ history }) => {
   };
 
   return (
-    <div className="d-flex">
-      <FormContainer>
-        <h3 className="my-3 text-center">User Profile</h3>
-        {success && (
-          <Message variant="success"> Profile Updated Successfully </Message>
-        )}
-        <Form onSubmit={submitHandler}>
-          <Form.Row>
-            <Form.Group as={Col} controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Update email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="name">
-              <Form.Label>Name</Form.Label>
+    <FormContainer>
+      <h3 className="my-4 text-center">User Profile</h3>
+      {success && (
+        <Message variant="success"> Profile Updated Successfully </Message>
+      )}
+      <Form onSubmit={submitHandler}>
+        <Form.Row>
+          <Form.Group as={Col} controlId="name">
+            <InputGroup className="mb-2">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Name</InputGroup.Text>
+              </InputGroup.Prepend>
               <Form.Control
                 type="text"
                 placeholder="Update name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                className="border-0"
               />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId="phone">
-              <Form.Label>Phone</Form.Label>
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="email">
+            <InputGroup className="mb-2 py-auto">
+              <InputGroup.Prepend >
+              <InputGroup.Text> Phone</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                type="email"
+                placeholder="Update email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border-0"
+              />
+            </InputGroup>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} controlId="phone">
+            <InputGroup className="mb-2">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Phone</InputGroup.Text>
+              </InputGroup.Prepend>
               <Form.Control
                 type="number"
                 placeholder="Update Phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                className="border-0"
               />
-            </Form.Group>
+            </InputGroup>
+          </Form.Group>
 
-            <Form.Group as={Col} controlId="password">
-              <Form.Label>Password</Form.Label>
+          <Form.Group as={Col} controlId="password">
+            <InputGroup className="mb-2">
+              <InputGroup.Prepend>
+                <InputGroup.Text>New Password</InputGroup.Text>
+              </InputGroup.Prepend>
               <Form.Control
                 type="password"
                 placeholder="New Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="border-0"
               />
-            </Form.Group>
-          </Form.Row>
+            </InputGroup>
+          </Form.Group>
+        </Form.Row>
 
-          <Form.Group controlId="college">
-            <Form.Label>College</Form.Label>
+        <Form.Group controlId="college">
+          <InputGroup className="mb-2">
+            <InputGroup.Prepend>
+              <InputGroup.Text>College Name</InputGroup.Text>
+            </InputGroup.Prepend>
             <Form.Control
               placeholder="Enter College Name"
               value={college}
               onChange={(e) => setCollege(e.target.value)}
+              className="border-0"
             />
-          </Form.Group>
+          </InputGroup>
+        </Form.Group>
 
-          <Form.Group controlId="City">
-            <Form.Label>City</Form.Label>
+        <Form.Group controlId="City">
+          <InputGroup className="mb-2">
+            <InputGroup.Prepend>
+              <InputGroup.Text>City</InputGroup.Text>
+            </InputGroup.Prepend>
             <Form.Control
               placeholder="Enter City"
               value={city}
               onChange={(e) => setCity(e.target.value)}
+              className="border-0"
             />
-          </Form.Group>
-
-          <Button variant="dark" type="submit" block>
-            Submit
-          </Button>
-        </Form>
-      </FormContainer>
-          <div>  <h3 className="my-3 text-center">Products Advertised</h3>
-      <Row>
-        <Col md={12}>
-          <ListGroup variant="flush">
-            {products.map((p) => {
-              return (
-                <ListGroup.Item key={p.data}>
-                  <Row>
-                    {/* <Col md={3} xs={5}>
-                      <Image
-                        src={p.image}
-                        alt={p.name}
-                        className="rounded"
-                        fluid
-                      ></Image>
-                    </Col> */}
-                    <Col md={4} xs={3} className="mt-3">
-                      <Link to={`/products/${p._id}`} className="text-dark">
-                        {" "}
-                        {p.name}{" "}
-                      </Link>
-                    </Col>
-                    <Col md={2} xs={2} className="mt-4">
-                      {p.price}
-                    </Col>
-                    <Col md={1} xs={2}>
-                      <Button
-                        variant="light"
-                        onClick={() => {
-                          console.log(p._id)
-                          onDeleteHandler(p._id)
-                        }}
-                        className="mt-3"
-                      >
-                        {" "}
-                        <i className="fas fa-trash"></i>{" "}
-                      </Button>
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-              );
-            })}
-          </ListGroup>
-        </Col>
-        <Col md={4}></Col>
-      </Row>
-      </div>
-    </div>
+          </InputGroup>
+        </Form.Group>
+        <Row className='mt-5'>
+        <Button variant="dark" type="submit" block >
+            Apply Changes
+        </Button>
+          </Row>
+      </Form>
+    </FormContainer>
   );
 };
 

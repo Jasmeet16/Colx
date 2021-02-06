@@ -18,3 +18,10 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.add-button{
+ 
+  position: fixed;
+    bottom: 30px;
+    right: 30px; 
+}

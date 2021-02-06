@@ -10,9 +10,7 @@ import LoginScreen from './Screens/LoginScreen'
 import RegisterScreen from './Screens/RegisterScreen'
 import ProfileScreen from './Screens/ProfileScreen'
 import ProductAddScreen from './Screens/ProductAddScreen'
-
-
-
+import MyAdsScreen from './Screens/MyAdsScreen'
 
 
 
@@ -29,8 +27,8 @@ function App() {
           <Route path='/register' component={ RegisterScreen } />
           <Route path='/profile' component={ ProfileScreen } />
           <Route path='/cart/:id' component={CartScreen} />
-          <Route path='/addproducts' component={ProductAddScreen} />
-
+          <Route path='/addproduct' component={ProductAddScreen} />
+          <Route path='/myads' component={MyAdsScreen} />
         </Container>
         </main>
       <Footer/>
