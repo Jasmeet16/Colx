@@ -34,3 +34,7 @@ input[type=number] {
 .card-img-top {
   object-fit: contain;
   }
+
+  a{
+    font-size: 14px;
+  }

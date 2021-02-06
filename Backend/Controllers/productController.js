@@ -5,8 +5,15 @@ const asyncHandler = require('express-async-handler');
 //get products
 // to api/products
 const getProducts = async (req, res) => {
+  const searchKey = req.query.searchKey ? {
+    name: {
+      $regex: req.query.searchKey,
+      $options: 'i'
+    }
+  } : {};
+
   try {
-    const products = await Product.find({});
+    const products = await Product.find({...searchKey});
     res.json(products);
   } catch (error) {
     console.error(error);

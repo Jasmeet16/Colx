@@ -8,12 +8,14 @@ import Product from "../Components/Product";
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 
-const HomeScreen = () => {
+const HomeScreen = ({match}) => {
+  const searchKey = match.params.searchKey;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(searchKey));
+  }, [dispatch , searchKey]);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;

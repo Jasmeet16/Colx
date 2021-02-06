@@ -24,7 +24,7 @@ const CartScreen = ({match}) => {
         if( productId ){
             dispatch( addItemToCart( productId ) )
         }
-    }, [dispatch]);
+    }, [dispatch ]);
 
    const {cartItems} = useSelector( state => state.cartItem );
    console.log(cartItems);

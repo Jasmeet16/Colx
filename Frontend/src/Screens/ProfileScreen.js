@@ -21,7 +21,7 @@ const ProfileScreen = ({ history }) => {
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const { error, user } = userDetails;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -65,6 +65,8 @@ const ProfileScreen = ({ history }) => {
   return (
     <FormContainer>
       <h3 className="my-4 text-center">User Profile</h3>
+      {error && <Message variant="danger"> {error} </Message>}
+
       {success && (
         <Message variant="success"> Profile Updated Successfully </Message>
       )}
