@@ -5,6 +5,10 @@ const asyncHandler = require('express-async-handler');
 //get products
 // to api/products
 const getProducts = async (req, res) => {
+
+  const pageSize = 8;
+  const page = Number(req.query.pageNumber) || 1;
+ // console.log(page)
   const searchKey = req.query.searchKey ? {
     name: {
       $regex: req.query.searchKey,
@@ -13,8 +17,9 @@ const getProducts = async (req, res) => {
   } : {};
 
   try {
-    const products = await Product.find({...searchKey});
-    res.json(products);
+    const count = await Product.countDocuments({ ...searchKey });
+    const products = await Product.find({...searchKey}).limit(pageSize).skip( pageSize * (page-1) );
+    res.json({ products , page , pages : Math.ceil( count / pageSize )  });
   } catch (error) {
     console.error(error);
   }

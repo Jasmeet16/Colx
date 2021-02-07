@@ -28,7 +28,7 @@ const SearchBar = ({ history }) => {
       >
       </Form.Control>
       <Button type="submit" variant="outline-light" className='py-2'>
-        <i class="fas fa-search"></i>
+        <i className="fas fa-search"></i>
       </Button>
     </Form>
   );

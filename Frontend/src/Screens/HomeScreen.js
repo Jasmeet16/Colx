@@ -7,21 +7,26 @@ import { LinkContainer } from "react-router-bootstrap";
 import Product from "../Components/Product";
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
+import Paginate from "../Components/Paginate";
+
 
 const HomeScreen = ({match}) => {
   const searchKey = match.params.searchKey;
 
+  const pageNumber = match.params.pageNumber || 1;
+
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listProducts(searchKey));
-  }, [dispatch , searchKey]);
+    dispatch(listProducts(searchKey , pageNumber));
+  }, [dispatch , searchKey , pageNumber]);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products , page , pages } = productList;
 
   return (
     <>
@@ -30,7 +35,8 @@ const HomeScreen = ({match}) => {
         <Loader></Loader>
       ) : error ? (
         <Message variant="danger" message={error.message}></Message>
-      ) : (
+        ) : (
+            <>
         <Row>
           {products.map((p) => {
             return (
@@ -40,7 +46,9 @@ const HomeScreen = ({match}) => {
               </Col>
             );
           })}
-        </Row>
+              </Row>
+<Paginate page={page} pages={pages} keyword={searchKey}></Paginate>
+              </>
       )}
       <OverlayTrigger
         overlay={<Tooltip id="button-tooltip-2"> Post your AD </Tooltip>}

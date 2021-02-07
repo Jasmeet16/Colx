@@ -1,3 +1,6 @@
+:root{
+  --primary:#373a3c !important;
+}
 main{
     min-height : 80vh;
 }
@@ -38,3 +41,25 @@ input[type=number] {
   a{
     font-size: 14px;
   }
+
+  .page-item.active .page-link {
+    color:aliceblue !important;
+    background-color: #373a3c !important;
+     border-color: #373a3c !important; 
+
+  }
+  .page-link{
+    color:#373a3c !important;
+     border-color: #373a3c !important; 
+  }
+  .page-link:hover{
+    color:aliceblue !important;
+    background-color: #373a3c !important;
+    border-color: #373a3c !important; 
+ }
+ .dropdown-item.active{
+  background-color: #373a3c !important;
+ }
+ .input-group-text{
+  background-color:white !important;
+ }

@@ -29,7 +29,9 @@ function App() {
           <Route path='/cart/:id' component={CartScreen} />
           <Route path='/addproduct' component={ProductAddScreen} />
           <Route path='/myads' component={MyAdsScreen} />
-          <Route path='/search/:searchKey' component={HomeScreen} />
+          <Route path='/page/:pageNumber' component={HomeScreen} exact/>
+          <Route path='/search/:searchKey/page/:pageNumber' component={HomeScreen} exact/>
+          <Route path='/search/:searchKey' component={HomeScreen} exact/>
           <Route path='/' component={HomeScreen} exact />
         </Container>
         </main>
