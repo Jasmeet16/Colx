@@ -8,6 +8,8 @@ import Product from "../Components/Product";
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import Paginate from "../Components/Paginate";
+import CarouselHome from "../Components/CarouselHome";
+
 
 
 const HomeScreen = ({match}) => {
@@ -30,7 +32,7 @@ const HomeScreen = ({match}) => {
 
   return (
     <>
-      <h1>Products</h1>
+      { pageNumber === 1 && !searchKey && <CarouselHome userInfo={userInfo}></CarouselHome>}
       {loading ? (
         <Loader></Loader>
       ) : error ? (

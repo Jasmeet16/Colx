@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 //
-import SearchBar from './SearchBar'
+import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 
@@ -23,16 +23,23 @@ const Header = () => {
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-        <Container className='align-center'>
+        <Container className="align-center">
           <LinkContainer to="/">
-            <Navbar.Brand href="/" className='ml-5'>Colx</Navbar.Brand>
+            <Navbar.Brand href="/" className="ml-5">
+              <img
+                src="/images/logo.png"
+                width="50"
+                height="50"
+                className="d-inline-block align-top"
+                alt="Colx logo"
+              />
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-          <Route render={( {history})=> <SearchBar history={history} /> } />
+            <Route render={({ history }) => <SearchBar history={history} />} />
 
             <Nav className="ml-auto">
-              
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <i className="fas fa-heart px-1"></i>Wishlist
@@ -42,19 +49,18 @@ const Header = () => {
                 <NavDropdown
                   title={userInfo.name}
                   id="collasible-nav-dropdown"
-                  className='super-colors'
-                > 
-                    <LinkContainer to="/profile" variant="success">
-                      <NavDropdown.Item >Profile</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/myads">
-                      <NavDropdown.Item>My ADs</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                 
+                  className="super-colors"
+                >
+                  <LinkContainer to="/profile" variant="success">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/myads">
+                    <NavDropdown.Item>My ADs</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
